@@ -1,0 +1,29 @@
+import re
+from bs4 import BeautifulSoup
+from urllib import request
+
+url='https://www.aozora.gr.jp/cards/000148/files/2371_13943.html'
+responce=request.urlopen(url)
+soup=BeautifulSoup(responce)
+responce.close()
+
+soup_text=soup.text
+soup_text=re.sub(r'[\u3000 \n \r]', '', soup_text)
+
+url2= 'http://svn.sourceforge.jp/svnroot/slothlib/CSharp/Version1/SlothLib/NLP/Filter/StopWord/word/Japanese.txt'
+response2 = request.urlopen(url2)
+soup2 = BeautifulSoup(response2)
+response2.close()
+
+soup2_text=soup2.text
+stop_text_list=soup2_text.split('\r\n')
+stop_text_list=[word for word in stop_text_list if word]
+
+result_text=[]
+
+for i in soup_text:
+  print(i)
+  if i not in stop_text_list:
+    result_text.append(i)
+
+print(result_text)
