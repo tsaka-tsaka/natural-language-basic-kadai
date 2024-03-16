@@ -7,7 +7,9 @@ responce=request.urlopen(url)
 soup=BeautifulSoup(responce)
 responce.close()
 
-soup_text=soup.text
+main_text = soup.find('div', class_='main_text')
+soup_text=main_text.get_text()
+
 soup_text=re.sub(r'[\u3000 \n \r]', '', soup_text)
 
 url2= 'http://svn.sourceforge.jp/svnroot/slothlib/CSharp/Version1/SlothLib/NLP/Filter/StopWord/word/Japanese.txt'
